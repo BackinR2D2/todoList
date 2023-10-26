@@ -4,9 +4,6 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 function ToDoList(props: ToDoProps) {
 
-    // draggable list: https://www.npmjs.com/package/react-drag-reorder
-    // https://contactmentor.com/react-drag-drop-list/
-
     const handleDrop = (droppedItem: any) => {
         if (!droppedItem.destination) return;
         const updatedList = [...props.todos];
@@ -18,33 +15,46 @@ function ToDoList(props: ToDoProps) {
     return (
         <Box as='div'>
             <div>
-                <DragDropContext onDragEnd={handleDrop}>
-                        <Droppable droppableId="list-container">
-                        {(provided) => (
-                            <div
-                            className="list-container"
-                            {...provided.droppableProps}
-                            ref={provided.innerRef}
-                            >
-                                {props.todos.map((item, index) => (
-                                    <Draggable key={`${item}${index}`} draggableId={`${item}${index}`} index={index}>
-                                    {(provided) => (
-                                        <div
-                                        className="item-container"
-                                        ref={provided.innerRef}
-                                        {...provided.dragHandleProps}
-                                        {...provided.draggableProps}
-                                        >
+                {
+                    props.isSearching ?
+                        <div className='list-container'>
+                            {
+                                props.searchResults.map((item, index) => (
+                                    <div className='item-container' key={index}>
                                         {item}
-                                        </div>
-                                    )}
-                                    </Draggable>
-                                ))}
-                                {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                    </DragDropContext>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                        :
+                        <DragDropContext onDragEnd={handleDrop}>
+                            <Droppable droppableId="list-container">
+                            {(provided) => (
+                                <div
+                                className="list-container"
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
+                                >
+                                    {props.todos.map((item, index) => (
+                                        <Draggable key={`${item}${index}`} draggableId={`${item}${index}`} index={index}>
+                                        {(provided) => (
+                                            <div
+                                            className="item-container"
+                                            ref={provided.innerRef}
+                                            {...provided.dragHandleProps}
+                                            {...provided.draggableProps}
+                                            >
+                                            {item}
+                                            </div>
+                                        )}
+                                        </Draggable>
+                                    ))}
+                                    {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                        </DragDropContext>
+                }
             </div>
         </Box>
     )
