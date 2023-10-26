@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #F4F4F5;
+}
+
+.main {
+  margin-top: 12em;
+}
+
+.list-container {
+  display: flex;
+  font-size: 18px;
+  background-color: #eee;
+  flex-direction: column;
+  margin-top: 2em;
+  height: 50vh;
+  overflow-y: auto;
+}
+.item-container {
+  background-color: #fff;
+  border: 1px solid black;
+  padding: 25px 70px;
+  margin: 15px 50px;
+}
