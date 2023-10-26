@@ -19,7 +19,7 @@ function ToDoList(props: ToDoProps) {
     const handleCopyToClipboardCopy = (item: string) => {
         toast({
             title: 'Copied to Clipboard',
-            description: `Element: ${item} has been copied successfully`,
+            description: `"${item}" has been copied successfully`,
             status: 'success',
             duration: 1500,
             isClosable: true,
@@ -34,16 +34,17 @@ function ToDoList(props: ToDoProps) {
                     props.isSearching ?
                         <div className='list-container'>
                             {
-                                props.searchResults.map((item, index) => (
-                                    <>
+                                props.searchResults.length === 0 ?
+                                    <div className='noElementsFoundText'>No elements found</div>
+                                    :
+                                    props.searchResults.map((item, index) => (
                                         <div className='item-container' key={index}>
                                             {item}
                                             <CopyToClipboard text={item} onCopy={() => handleCopyToClipboardCopy(item)}>
                                                 <IconButton aria-label='Copy To Clipboard' icon={<CopyIcon />} />
                                             </CopyToClipboard>
                                         </div>
-                                    </>
-                                ))
+                                    ))
                             }
                         </div>
                         :

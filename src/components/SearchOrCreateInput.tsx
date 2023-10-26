@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Input } from '@chakra-ui/react';
+import { Input, useToast } from '@chakra-ui/react';
 import { ToDoProps } from '../types/ToDoProps';
 
 function SearchOrCreateInput(props: ToDoProps) {
 
+    const toast = useToast();
     const [todo, setTodo] = useState<string>("");
 
     const handleToDoInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,6 +20,18 @@ function SearchOrCreateInput(props: ToDoProps) {
 
     const handleToDoFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const existingElement = props.todos.find((element) => element === todo);
+        if(existingElement) {
+            toast({
+                title: 'Duplicate To-do',
+                description: `"${todo}" already exists in the list`,
+                status: 'error',
+                duration: 1500,
+                isClosable: true,
+                position: 'top-right',
+            });
+            return;
+        }
         props.setTodos((currentState) => [todo, ...currentState]);
         setTodo("");
         props.setIsSearching(false);
@@ -26,7 +39,7 @@ function SearchOrCreateInput(props: ToDoProps) {
 
     return (
         <form onSubmit={handleToDoFormSubmit}>
-            <Input variant='flushed' placeholder='Search or create a To-do' borderColor={'#2A2E3C'} value={todo} onChange={handleToDoInputChange} />
+            <Input variant='flushed' required placeholder='Search or create a To-do' borderColor={'#2A2E3C'} value={todo} onChange={handleToDoInputChange} />
         </form>
     )
 }
