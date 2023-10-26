@@ -55,6 +55,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   word-break: break-all;
+  gap: 16px;
 }
 
 .noElementsFoundText {

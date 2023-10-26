@@ -22,7 +22,6 @@ function Homepage() {
         if(localStorage.getItem('todos') === null) {
             localStorage.setItem('todos', JSON.stringify([]));
         } else {
-            console.log(todos);
             if(todos.length > 0 && !isSearching) {
                 localStorage.setItem('todos', JSON.stringify(todos));
             }
